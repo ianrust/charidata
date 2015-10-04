@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var pg = require('pg');
-var qs = require('qs');
 
 app.set('port', (process.env.PORT || 5000));
 var connectionString = process.env.DATABASE_URL || 'postgres://test:test@localhost:5432/charidata';
