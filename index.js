@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 
 app.get('/haitilog', function(request, response) {
   console.log(request);
-  res.sendStatus(200);
+  response.sendStatus(200);
 });
 
 app.get('/', function(request, response) {
