@@ -13,19 +13,19 @@ app.set('view engine', 'ejs');
 
 app.get('/api/v1/haiti', function(request, response) {
   console.log(request.query);
-
-  pg.connect(connectionString, function(err, client, done) {
-    client.query("INSERT INTO haiti(msisdn, phone, messageid, message, keyword, time, fullreq) values($1,$2,$3,$4,$5,$6,$7)",
-        [request.query.msisdn, request.query.to, request.query.messageId, request.query.text, request.query.keyword, request.query['message-timestamp'], request.url], function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { console.log('success!');
-         client.end(); }
+  if (Object.keys(request.query).length > 0) {
+    pg.connect(connectionString, function(err, client, done) {
+      client.query("INSERT INTO haiti(msisdn, phone, messageid, message, keyword, time, fullreq) values($1,$2,$3,$4,$5,$6,$7)",
+          [request.query.msisdn, request.query.to, request.query.messageId, request.query.text, request.query.keyword, request.query['message-timestamp'], request.url], function(err, result) {
+        done();
+        if (err)
+         { console.error(err); response.send("Error " + err); }
+        else
+         { console.log('success!');
+           client.end(); }
+      });
     });
-  });
-
+  }
   response.sendStatus(200);
 });
 
